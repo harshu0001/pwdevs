@@ -1,0 +1,540 @@
+:root {
+    --primary: #FFD700;
+    --primary-dark: #ccac00;
+    --bg-dark: #0f172a;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --error: #ef4444;
+    --success: #22c55e;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Sections */
+section {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+}
+
+section.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background Animations */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0) 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: move 20s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    top: -100px;
+    right: -100px;
+}
+
+.blob-2 {
+    bottom: -100px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(30, 64, 175, 0.1) 0%, rgba(30, 64, 175, 0) 70%);
+}
+
+@keyframes move {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 50px) scale(1.1); }
+}
+
+/* Login Page */
+#login-section {
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pw-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--primary);
+    padding: 2px;
+    background: white;
+}
+
+.logo-area h1 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-area p {
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+}
+
+/* Forms */
+.input-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+    width: 18px;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline {
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: var(--bg-card);
+    border-color: var(--text-muted);
+}
+
+.error-msg {
+    color: var(--error);
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    height: 1rem;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+}
+
+.nav-logo-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: white;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-profile span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.btn-icon {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+}
+
+.btn-icon:hover {
+    color: var(--error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+}
+
+.header-content {
+    margin-bottom: 2.5rem;
+}
+
+.header-content h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-content p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.certificate-card {
+    padding: 2rem;
+}
+
+.certificate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.badge-success {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.cert-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.cert-actions .btn-primary {
+    width: auto;
+    margin-top: 0;
+    padding: 0.6rem 1.5rem;
+}
+
+.certificate-view {
+    background: #f1f5f9;
+    border-radius: 16px;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.official-receipt {
+    width: 100%;
+    max-width: 750px;
+    background: white;
+    padding: 4rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 1px solid #e2e8f0;
+    position: relative;
+    color: #1e293b;
+    font-family: var(--font-body);
+}
+
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+}
+
+.brand-side {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.receipt-logo {
+    width: 65px;
+    height: 65px;
+    border: 1px solid #e2e8f0;
+    padding: 2px;
+}
+
+.brand-text h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.brand-text p {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.doc-meta {
+    text-align: right;
+}
+
+.doc-type {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.doc-id {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.2rem;
+    border-left: 4px solid #FFD700;
+    padding-left: 0.8rem;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.data-box label {
+    display: block;
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.data-box .value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.data-box .value.highlight {
+    color: #0f172a;
+    font-size: 1.2rem;
+}
+
+.asset-spec {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.spec-header {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.spec-item span {
+    color: #64748b;
+}
+
+.receipt-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 4rem;
+}
+
+.sign-line {
+    width: 180px;
+    border-bottom: 1px solid #cbd5e1;
+    margin-bottom: 0.5rem;
+}
+
+.footer-sign p {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.verified-seal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #22c55e;
+    font-weight: 900;
+    font-size: 1.2rem;
+    border: 3px solid #22c55e;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transform: rotate(-5deg);
+    opacity: 0.8;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .cert-actions {
+        flex-direction: column;
+    }
+    
+    .certificate-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    
+    .cert-actions {
+        width: 100%;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+}

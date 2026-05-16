@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PW Developer Portal | Laptop Issuance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <section id="login-section" class="active">
+            <div class="login-container">
+                <div class="glass-card login-card">
+                    <div class="logo-area">
+                        <img src="pw.jpg" alt="PW Logo" class="pw-logo">
+                        <h1>Developer Portal</h1>
+                        <p>Access your laptop issuance certificate</p>
+                    </div>
+                    <form id="login-form">
+                        <div class="input-group">
+                            <label for="email">Work Email</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="mail"></i>
+                                <input type="email" id="email" placeholder="name@pw.live" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="lock"></i>
+                                <input type="password" id="password" placeholder="••••••••" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <span>Sign In</span>
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                        <p id="error-message" class="error-msg"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="background-blobs">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section">
+            <nav class="navbar">
+                <div class="nav-content">
+                    <div class="nav-logo">
+                        <img src="pw.jpg" alt="PW Logo" class="nav-logo-img">
+                        <span>DevPortal</span>
+                    </div>
+                    <div class="user-profile">
+                        <span id="user-display">harsh.240104@pw.live</span>
+                        <button id="logout-btn" class="btn-icon">
+                            <i data-lucide="log-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="dashboard-content">
+                <div class="header-content">
+                    <h1>Laptop Issuance Certificate</h1>
+                    <p>Verified hardware asset for Harsh Kumar</p>
+                </div>
+
+                <div class="certificate-container">
+                    <div class="glass-card certificate-card">
+                        <div class="certificate-header">
+                            <div class="cert-status">
+                                <span class="badge-success">Verified</span>
+                            </div>
+                            <div class="cert-actions">
+                                <button class="btn-outline" id="print-btn">
+                                    <i data-lucide="printer"></i>
+                                    <span>Print</span>
+                                </button>
+                                <button class="btn-primary" id="download-btn">
+                                    <i data-lucide="download"></i>
+                                    <span>Download PDF</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="certificate-view" id="certificate-view">
+                            <div class="official-receipt" id="receipt-content">
+                                <header class="receipt-header">
+                                    <div class="brand-side">
+                                        <img src="pw.jpg" alt="PW Logo" class="receipt-logo">
+                                        <div class="brand-text">
+                                            <h2>Physics Wallah</h2>
+                                            <p>Human Resources Department</p>
+                                        </div>
+                                    </div>
+                                    <div class="doc-meta">
+                                        <span class="doc-type">Laptop Issuance Receipt</span>
+                                        <span class="doc-id">REF: PW/IT/2026/0516</span>
+                                    </div>
+                                </header>
+                                
+                                <div class="receipt-body">
+                                    <div class="section-title">Recipient Information</div>
+                                    <div class="data-grid">
+                                        <div class="data-box">
+                                            <label>Full Name</label>
+                                            <div class="value">Harsh Pratap Singh</div>
+                                        </div>
+                                        <div class="data-box">
+                                            <label>Employee ID</label>
+                                            <div class="value">Lx240104</div>
+                                        </div>
+                                        <div class="data-box">
+                                            <label>Issuing Officer</label>
+                                            <div class="value">Manjunath Vespa (HR)</div>
+                                        </div>
+                                        <div class="data-box">
+                                            <label>Issue Date</label>
+                                            <div class="value">May 16, 2026</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-title">Transaction Details</div>
+                                    <div class="data-grid">
+                                        <div class="data-box">
+                                            <label>Payment Source</label>
+                                            <div class="value">TNT Enterprises</div>
+                                        </div>
+                                        <div class="data-box">
+                                            <label>Security Deposit</label>
+                                            <div class="value highlight">₹ 1,000.00</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="asset-spec">
+                                        <div class="spec-header">Asset Specifications</div>
+                                        <div class="spec-item">
+                                            <span>Hardware:</span>
+                                            <strong>Developer Grade Laptop - High Performance</strong>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span>Includes:</span>
+                                            <strong>Charger, Carry Case, Peripheral Kit</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <footer class="receipt-footer">
+                                    <div class="footer-sign">
+                                        <div class="sign-line"></div>
+                                        <p>Authorized Signature</p>
+                                    </div>
+                                    <div class="verified-seal">
+                                        <i data-lucide="shield-check"></i>
+                                        <span>VERIFIED</span>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
