@@ -2,7 +2,7 @@
 const state = {
     isLoggedIn: false,
     userEmail: '',
-    certificateFile: 'laptop_receipt.jpg' // We'll check if this exists
+    currentPage: 'home'
 };
 
 // Selectors
@@ -12,9 +12,16 @@ const dashboardSection = document.getElementById('dashboard-section');
 const errorMessage = document.getElementById('error-message');
 const logoutBtn = document.getElementById('logout-btn');
 const userDisplay = document.getElementById('user-display');
-const certificateView = document.getElementById('certificate-view');
-const downloadBtn = document.getElementById('download-btn');
-const printBtn = document.getElementById('print-btn');
+
+// Nav Selectors
+const navLinks = document.querySelectorAll('.nav-link');
+const pages = document.querySelectorAll('.page-content');
+
+// Action Buttons
+const downloadLaptopBtn = document.getElementById('download-laptop-btn');
+const printLaptopBtn = document.getElementById('print-laptop-btn');
+const downloadTradeinBtn = document.getElementById('download-tradein-btn');
+const printTradeinBtn = document.getElementById('print-tradein-btn');
 
 // Credentials
 const VALID_EMAIL = 'harsh.240104@pw.live';
@@ -27,6 +34,15 @@ function init() {
     if (savedEmail) {
         showDashboard(savedEmail);
     }
+
+    // Setup Navigation Listeners
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pageId = link.getAttribute('data-page');
+            switchPage(pageId);
+        });
+    });
 }
 
 // Login Handler
@@ -51,12 +67,10 @@ loginForm.addEventListener('submit', (e) => {
 });
 
 // Logout Handler
-logoutBtn.addEventListener('submit', (e) => {
+logoutBtn.addEventListener('click', (e) => {
     e.preventDefault();
     logout();
 });
-
-logoutBtn.onclick = logout;
 
 function logout() {
     localStorage.removeItem('pw_user_email');
@@ -71,24 +85,43 @@ function showDashboard(email) {
     loginSection.classList.remove('active');
     dashboardSection.classList.add('active');
     
-    // Load certificate content
-    loadCertificate();
+    // Always default to home page on login
+    switchPage('home');
 }
 
-function loadCertificate() {
-    // The receipt is now hardcoded in HTML for this demo
-    // We can add logic here if we want to fetch real data
+// Page Navigation Logic
+function switchPage(pageId) {
+    state.currentPage = pageId;
+    
+    // Update nav links styling
+    navLinks.forEach(link => {
+        if (link.getAttribute('data-page') === pageId) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
+    // Update visible pages
+    pages.forEach(page => {
+        if (page.id === `page-${pageId}`) {
+            page.classList.add('active');
+        } else {
+            page.classList.remove('active');
+        }
+    });
 }
 
-// Actions
-downloadBtn.onclick = () => {
-    // For a generated HTML receipt, printing is the best way to "save" as PDF
+// Print & Download Handlers
+// For a generated HTML receipt, printing is the best way to "save" as PDF in a browser context
+const handlePrint = () => {
     window.print();
 };
 
-printBtn.onclick = () => {
-    window.print();
-};
+if (printLaptopBtn) printLaptopBtn.addEventListener('click', handlePrint);
+if (downloadLaptopBtn) downloadLaptopBtn.addEventListener('click', handlePrint);
+if (printTradeinBtn) printTradeinBtn.addEventListener('click', handlePrint);
+if (downloadTradeinBtn) downloadTradeinBtn.addEventListener('click', handlePrint);
 
 // Add CSS animation for shake
 const style = document.createElement('style');
@@ -102,4 +135,5 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// Run Initialization
 init();

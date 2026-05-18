@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PW Developer Portal | Laptop Issuance</title>
+    <title>PW Developer Portal | Asset Management</title>
+    <meta name="description"
+        content="Physics Wallah Developer Portal — manage laptop issuance certificates and device trade-ins.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div id="app">
-        <!-- Login Page -->
+
+        <!-- ═══════════════════════════════════════════
+             LOGIN SECTION
+        ════════════════════════════════════════════ -->
         <section id="login-section" class="active">
             <div class="login-container">
                 <div class="glass-card login-card">
                     <div class="logo-area">
                         <img src="pw.jpg" alt="PW Logo" class="pw-logo">
                         <h1>Developer Portal</h1>
-                        <p>Access your laptop issuance certificate</p>
+                        <p>Access your asset management dashboard</p>
                     </div>
                     <form id="login-form">
                         <div class="input-group">
@@ -36,7 +45,7 @@
                                 <input type="password" id="password" placeholder="••••••••" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn-primary">
+                        <button type="submit" class="btn-primary" id="login-btn">
                             <span>Sign In</span>
                             <i data-lucide="arrow-right"></i>
                         </button>
@@ -47,127 +56,458 @@
             <div class="background-blobs">
                 <div class="blob blob-1"></div>
                 <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
             </div>
         </section>
 
-        <!-- Dashboard Section -->
+        <!-- ═══════════════════════════════════════════
+             DASHBOARD SECTION
+        ════════════════════════════════════════════ -->
         <section id="dashboard-section">
+
+            <!-- ─── Navbar ─── -->
             <nav class="navbar">
                 <div class="nav-content">
                     <div class="nav-logo">
                         <img src="pw.jpg" alt="PW Logo" class="nav-logo-img">
                         <span>DevPortal</span>
                     </div>
-                    <div class="user-profile">
-                        <span id="user-display">harsh.240104@pw.live</span>
-                        <button id="logout-btn" class="btn-icon">
+
+                    <ul class="nav-links" id="nav-links">
+                        <li><a href="#" class="nav-link active" data-page="home" id="nav-home">
+                                <i data-lucide="layout-dashboard"></i> Home
+                            </a></li>
+                        <li><a href="#" class="nav-link" data-page="databases" id="nav-databases">
+                                <i data-lucide="database"></i> Databases
+                            </a></li>
+                        <li><a href="#" class="nav-link" data-page="json" id="nav-json">
+                                <i data-lucide="file-json"></i> JSON Files
+                            </a></li>
+                        <li><a href="#" class="nav-link" data-page="mcp" id="nav-mcp">
+                                <i data-lucide="cpu"></i> MCP
+                            </a></li>
+                        <li><a href="#" class="nav-link" data-page="servers" id="nav-servers">
+                                <i data-lucide="server"></i> Servers
+                            </a></li>
+                    </ul>
+
+                    <div class="nav-right">
+                        <span id="user-display" class="user-email">harsh.240104@pw.live</span>
+                        <button id="logout-btn" class="btn-icon" title="Logout">
                             <i data-lucide="log-out"></i>
                         </button>
                     </div>
                 </div>
             </nav>
 
-            <main class="dashboard-content">
-                <div class="header-content">
-                    <h1>Laptop Issuance Certificate</h1>
-                    <p>Verified hardware asset for Harsh Kumar</p>
+            <!-- ─── Page: Home ─── -->
+            <main class="page-content active" id="page-home">
+
+                <!-- Hero -->
+                <div class="page-hero">
+                    <div class="hero-inner">
+                        <div class="hero-badge">
+                            <i data-lucide="shield-check"></i>
+                            <span>Verified Assets</span>
+                        </div>
+                        <h1>Asset Management Dashboard</h1>
+                        <p>All hardware receipts and trade-in records for <strong>Harsh Pratap Singh</strong></p>
+                    </div>
                 </div>
 
-                <div class="certificate-container">
-                    <div class="glass-card certificate-card">
-                        <div class="certificate-header">
-                            <div class="cert-status">
-                                <span class="badge-success">Verified</span>
-                            </div>
-                            <div class="cert-actions">
-                                <button class="btn-outline" id="print-btn">
-                                    <i data-lucide="printer"></i>
-                                    <span>Print</span>
-                                </button>
-                                <button class="btn-primary" id="download-btn">
-                                    <i data-lucide="download"></i>
-                                    <span>Download PDF</span>
-                                </button>
-                            </div>
+                <div class="dashboard-content">
+
+                    <!-- ── LAPTOP ISSUANCE SECTION ── -->
+                    <div class="section-header">
+                        <div class="section-label">
+                            <i data-lucide="laptop"></i>
+                            <span>Laptop Issuance</span>
                         </div>
-                        <div class="certificate-view" id="certificate-view">
-                            <div class="official-receipt" id="receipt-content">
-                                <header class="receipt-header">
-                                    <div class="brand-side">
-                                        <img src="pw.jpg" alt="PW Logo" class="receipt-logo">
-                                        <div class="brand-text">
-                                            <h2>Physics Wallah</h2>
-                                            <p>Human Resources Department</p>
-                                        </div>
-                                    </div>
-                                    <div class="doc-meta">
-                                        <span class="doc-type">Laptop Issuance Receipt</span>
-                                        <span class="doc-id">REF: PW/IT/2026/0516</span>
-                                    </div>
-                                </header>
-                                
-                                <div class="receipt-body">
-                                    <div class="section-title">Recipient Information</div>
-                                    <div class="data-grid">
-                                        <div class="data-box">
-                                            <label>Full Name</label>
-                                            <div class="value">Harsh Pratap Singh</div>
-                                        </div>
-                                        <div class="data-box">
-                                            <label>Employee ID</label>
-                                            <div class="value">Lx240104</div>
-                                        </div>
-                                        <div class="data-box">
-                                            <label>Issuing Officer</label>
-                                            <div class="value">Manjunath Vespa (HR)</div>
-                                        </div>
-                                        <div class="data-box">
-                                            <label>Issue Date</label>
-                                            <div class="value">May 16, 2026</div>
-                                        </div>
-                                    </div>
+                        <span class="badge-success">Issued</span>
+                    </div>
 
-                                    <div class="section-title">Transaction Details</div>
-                                    <div class="data-grid">
-                                        <div class="data-box">
-                                            <label>Payment Source</label>
-                                            <div class="value">TNT Enterprises</div>
-                                        </div>
-                                        <div class="data-box">
-                                            <label>Security Deposit</label>
-                                            <div class="value highlight">₹ 1,000.00</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="asset-spec">
-                                        <div class="spec-header">Asset Specifications</div>
-                                        <div class="spec-item">
-                                            <span>Hardware:</span>
-                                            <strong>Developer Grade Laptop - High Performance</strong>
-                                        </div>
-                                        <div class="spec-item">
-                                            <span>Includes:</span>
-                                            <strong>Charger, Carry Case, Peripheral Kit</strong>
-                                        </div>
-                                    </div>
+                    <div class="certificate-container">
+                        <div class="glass-card certificate-card">
+                            <div class="certificate-header">
+                                <div class="cert-status">
+                                    <span class="badge-success">Verified</span>
                                 </div>
+                                <div class="cert-actions">
+                                    <button class="btn-outline" id="print-laptop-btn">
+                                        <i data-lucide="printer"></i>
+                                        <span>Print</span>
+                                    </button>
+                                    <button class="btn-primary btn-sm" id="download-laptop-btn">
+                                        <i data-lucide="download"></i>
+                                        <span>Download PDF</span>
+                                    </button>
+                                </div>
+                            </div>
 
-                                <footer class="receipt-footer">
-                                    <div class="footer-sign">
-                                        <div class="sign-line"></div>
-                                        <p>Authorized Signature</p>
+                            <div class="certificate-view" id="certificate-view">
+                                <div class="official-receipt" id="receipt-laptop">
+                                    <header class="receipt-header">
+                                        <div class="brand-side">
+                                            <img src="pw.jpg" alt="PW Logo" class="receipt-logo">
+                                            <div class="brand-text">
+                                                <h2>Physics Wallah</h2>
+                                                <p>Human Resources Department</p>
+                                            </div>
+                                        </div>
+                                        <div class="doc-meta">
+                                            <span class="doc-type">Laptop Issuance Receipt</span>
+                                            <span class="doc-id">REF: PW/IT/2026/0516</span>
+                                        </div>
+                                    </header>
+
+                                    <div class="receipt-body">
+                                        <div class="section-title">Recipient Information</div>
+                                        <div class="data-grid">
+                                            <div class="data-box">
+                                                <label>Full Name</label>
+                                                <div class="value">Harsh Pratap Singh</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Employee ID</label>
+                                                <div class="value">Lx240104</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Issuing Officer</label>
+                                                <div class="value">Manjunath Vespa (HR)</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Issue Date</label>
+                                                <div class="value">May 16, 2026</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="section-title">Transaction Details</div>
+                                        <div class="data-grid">
+                                            <div class="data-box">
+                                                <label>Payment Source</label>
+                                                <div class="value">TNT Enterprises</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Security Deposit</label>
+                                                <div class="value highlight">₹ 1,000.00</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="asset-spec">
+                                            <div class="spec-header">Asset Specifications</div>
+                                            <div class="spec-item">
+                                                <span>Hardware:</span>
+                                                <strong>Developer Grade Laptop — High Performance</strong>
+                                            </div>
+                                            <div class="spec-item">
+                                                <span>Includes:</span>
+                                                <strong>Charger, Carry Case, Peripheral Kit</strong>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="verified-seal">
-                                        <i data-lucide="shield-check"></i>
-                                        <span>VERIFIED</span>
-                                    </div>
-                                </footer>
+
+                                    <footer class="receipt-footer">
+                                        <div class="footer-sign">
+                                            <div class="sign-line"></div>
+                                            <p>Authorized Signature</p>
+                                        </div>
+                                        <div class="verified-seal">
+                                            <i data-lucide="shield-check"></i>
+                                            <span>VERIFIED</span>
+                                        </div>
+                                    </footer>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- ── TRADE-IN SECTION ── -->
+                    <div class="section-header trade-in-header">
+                        <div class="section-label">
+                            <i data-lucide="refresh-cw"></i>
+                            <span>Device Trade-In</span>
+                        </div>
+                        <span class="badge-tradein">Trade-In Processed</span>
+                    </div>
+
+                    <div class="certificate-container">
+                        <div class="glass-card certificate-card">
+                            <div class="certificate-header">
+                                <div class="cert-status">
+                                    <span class="badge-tradein">Trade-In Confirmed</span>
+                                </div>
+                                <div class="cert-actions">
+                                    <button class="btn-outline" id="print-tradein-btn">
+                                        <i data-lucide="printer"></i>
+                                        <span>Print</span>
+                                    </button>
+                                    <button class="btn-primary btn-sm" id="download-tradein-btn">
+                                        <i data-lucide="download"></i>
+                                        <span>Download PDF</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="certificate-view" id="tradein-view">
+                                <div class="official-receipt" id="receipt-tradein">
+
+                                    <!-- Trade-In receipt header -->
+                                    <header class="receipt-header">
+                                        <div class="brand-side">
+                                            <img src="pw.jpg" alt="PW Logo" class="receipt-logo">
+                                            <div class="brand-text">
+                                                <h2>Physics Wallah</h2>
+                                                <p>IT Assets &amp; Procurement</p>
+                                            </div>
+                                        </div>
+                                        <div class="doc-meta">
+                                            <span class="doc-type tradein-type">Device Trade-In Receipt</span>
+                                            <span class="doc-id">REF: PW/TI/2026/0518</span>
+                                            <span class="doc-date">Date: May 18, 2026</span>
+                                        </div>
+                                    </header>
+
+                                    <!-- Trade-In banner -->
+                                    <div class="tradein-banner">
+                                        <div class="tradein-banner-icon">
+                                            <i data-lucide="refresh-cw"></i>
+                                        </div>
+                                        <div>
+                                            <div class="tradein-banner-title">Trade-In Acknowledgement</div>
+                                            <div class="tradein-banner-sub">
+                                                Employee has surrendered a personal device as trade-in credit<br>
+                                                towards the new iPad issued by the company.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="receipt-body">
+
+                                        <!-- Employee info -->
+                                        <div class="section-title">Employee Information</div>
+                                        <div class="data-grid">
+                                            <div class="data-box">
+                                                <label>Full Name</label>
+                                                <div class="value">Harsh Pratap Singh</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Employee ID</label>
+                                                <div class="value">Lx240104</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Department</label>
+                                                <div class="value">Engineering / Development</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Processed By</label>
+                                                <div class="value">Manjunath Vespa (IT Assets)</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Traded-In Device -->
+                                        <div class="section-title">Traded-In Device (Surrendered)</div>
+                                        <div class="device-card device-surrendered">
+                                            <div class="device-icon-wrap surrendered-icon">
+                                                <i data-lucide="tablet-smartphone"></i>
+                                            </div>
+                                            <div class="device-info">
+                                                <div class="device-name">Samsung Galaxy Tab A8</div>
+                                                <div class="device-brand">Samsung Electronics</div>
+                                            </div>
+                                            <div class="device-tag tag-surrendered">SURRENDERED</div>
+                                        </div>
+
+                                        <div class="data-grid spec-grid">
+                                            <div class="data-box">
+                                                <label>Device Model</label>
+                                                <div class="value">Samsung Galaxy Tab A8</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Manufacturer</label>
+                                                <div class="value">Samsung Electronics</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Screen Size</label>
+                                                <div class="value">8.5 inch TFT LCD</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Condition at Trade-In</label>
+                                                <div class="value">Good — Minor wear</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Storage</label>
+                                                <div class="value">32 GB</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Color</label>
+                                                <div class="value">Gray</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- New Device Issued -->
+                                        <div class="section-title">New Device Issued (In Exchange)</div>
+                                        <div class="device-card device-issued">
+                                            <div class="device-icon-wrap issued-icon">
+                                                <i data-lucide="tablet"></i>
+                                            </div>
+                                            <div class="device-info">
+                                                <div class="device-name">Apple iPad</div>
+                                                <div class="device-brand">Apple Inc. — Company Asset</div>
+                                            </div>
+                                            <div class="device-tag tag-issued">PROCESSED</div>
+                                        </div>
+
+                                        <div class="data-grid spec-grid">
+                                            <div class="data-box">
+                                                <label>Issued By</label>
+                                                <div class="value">Physics Wallah Pvt. Ltd.</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Asset Category</label>
+                                                <div class="value">Company Property</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Issue Date</label>
+                                                <div class="value">May 19, 2026</div>
+                                            </div>
+                                            <div class="data-box">
+                                                <label>Asset Status</label>
+                                                <div class="value highlight-green">Active — In Use</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Trade-In Terms -->
+                                        <div class="asset-spec terms-box">
+                                            <div class="spec-header">Trade-In Terms &amp; Conditions</div>
+                                            <div class="terms-list">
+                                                <div class="term-item">
+                                                    <i data-lucide="check-circle"></i>
+                                                    <span>The Samsung Galaxy Tab A8 has been officially surrendered to
+                                                        Physics Wallah IT Assets department.</span>
+                                                </div>
+                                                <div class="term-item">
+                                                    <i data-lucide="check-circle"></i>
+                                                    <span>The new Apple iPad is company property and must be used solely
+                                                        for official purposes.</span>
+                                                </div>
+                                                <div class="term-item">
+                                                    <i data-lucide="check-circle"></i>
+                                                    <span>The employee acknowledges receipt of the new iPad and
+                                                        surrender of the Tab A8.</span>
+                                                </div>
+                                                <div class="term-item">
+                                                    <i data-lucide="check-circle"></i>
+                                                    <span>Any damage or loss of the issued iPad will be subject to
+                                                        company policy on asset recovery.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Summary row -->
+                                        <div class="tradein-summary">
+                                            <div class="summary-item">
+                                                <span class="summary-label">Transaction Type</span>
+                                                <span class="summary-value">Device Trade-In</span>
+                                            </div>
+                                            <div class="summary-divider"></div>
+                                            <div class="summary-item">
+                                                <span class="summary-label">Status</span>
+                                                <span class="summary-value status-done">Completed</span>
+                                            </div>
+                                            <div class="summary-divider"></div>
+                                            <div class="summary-item">
+                                                <span class="summary-label">Reference No.</span>
+                                                <span class="summary-value mono">PW/TI/2026/0518</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Footer signatures -->
+                                    <footer class="receipt-footer tradein-footer">
+                                        <div class="footer-sign-group">
+                                            <div class="footer-sign">
+                                                <div class="sign-line"></div>
+                                                <p>Employee Signature</p>
+                                                <p class="sign-name">Harsh Pratap Singh</p>
+                                            </div>
+                                            <div class="footer-sign">
+                                                <div class="sign-line"></div>
+                                                <p>IT Assets Officer</p>
+                                                <p class="sign-name">Manjunath Vespa</p>
+                                            </div>
+                                            <div class="footer-sign">
+                                                <div class="sign-line"></div>
+                                                <p>Authorized By (HR)</p>
+                                                <p class="sign-name">Physics Wallah HR</p>
+                                            </div>
+                                        </div>
+                                        <div class="verified-seal tradein-seal">
+                                            <i data-lucide="badge-check"></i>
+                                            <span>TRADE-IN VERIFIED</span>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /dashboard-content -->
+            </main>
+
+            <!-- ─── Page: Databases ─── -->
+            <main class="page-content" id="page-databases">
+                <div class="coming-soon-wrap">
+                    <div class="cs-icon"><i data-lucide="database"></i></div>
+                    <h2 class="cs-title">Databases</h2>
+                    <p class="cs-sub">This section is under construction.</p>
+                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-dots">
+                        <span></span><span></span><span></span>
+                    </div>
                 </div>
             </main>
-        </section>
+
+            <!-- ─── Page: JSON Files ─── -->
+            <main class="page-content" id="page-json">
+                <div class="coming-soon-wrap">
+                    <div class="cs-icon"><i data-lucide="file-json"></i></div>
+                    <h2 class="cs-title">JSON Files</h2>
+                    <p class="cs-sub">JSON configuration browser coming soon.</p>
+                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- ─── Page: MCP ─── -->
+            <main class="page-content" id="page-mcp">
+                <div class="coming-soon-wrap">
+                    <div class="cs-icon"><i data-lucide="cpu"></i></div>
+                    <h2 class="cs-title">MCP</h2>
+                    <p class="cs-sub">Model Context Protocol management is being built.</p>
+                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- ─── Page: Servers ─── -->
+            <main class="page-content" id="page-servers">
+                <div class="coming-soon-wrap">
+                    <div class="cs-icon"><i data-lucide="server"></i></div>
+                    <h2 class="cs-title">Servers</h2>
+                    <p class="cs-sub">Server management dashboard is in progress.</p>
+                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </main>
+
+        </section><!-- /dashboard-section -->
     </div>
 
     <script src="script.js"></script>
@@ -175,4 +515,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>
