@@ -14,6 +14,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 
 <body>
@@ -106,12 +107,20 @@
                 <!-- Hero -->
                 <div class="page-hero">
                     <div class="hero-inner">
-                        <div class="hero-badge">
-                            <i data-lucide="shield-check"></i>
-                            <span>Verified Assets</span>
+                        <div class="hero-top-row">
+                            <div>
+                                <div class="hero-badge">
+                                    <i data-lucide="shield-check"></i>
+                                    <span>Verified Assets</span>
+                                </div>
+                                <h1>Asset Management Dashboard</h1>
+                                <p>All hardware receipts and trade-in records for <strong>Harsh Pratap Singh</strong></p>
+                            </div>
+                            <button class="btn-mark-attendance" id="mark-attendance-btn">
+                                <i data-lucide="scan-line"></i>
+                                <span>Mark Attendance</span>
+                            </button>
                         </div>
-                        <h1>Asset Management Dashboard</h1>
-                        <p>All hardware receipts and trade-in records for <strong>Harsh Pratap Singh</strong></p>
                     </div>
                 </div>
 
@@ -263,7 +272,7 @@
                                         <div class="doc-meta">
                                             <span class="doc-type tradein-type">Device Trade-In Receipt</span>
                                             <span class="doc-id">REF: PW/TI/2026/0518</span>
-                                            <span class="doc-date">Date: May 18, 2026</span>
+                                            <span class="doc-date">Date: May 20, 2026</span>
                                         </div>
                                     </header>
 
@@ -276,7 +285,7 @@
                                             <div class="tradein-banner-title">Trade-In Acknowledgement</div>
                                             <div class="tradein-banner-sub">
                                                 Employee has surrendered a personal device as trade-in credit<br>
-                                                towards the new iPad issued by the company.
+                                                towards the new Realme Pad 2 Lite issued by the company.
                                             </div>
                                         </div>
                                     </div>
@@ -351,8 +360,8 @@
                                                 <i data-lucide="tablet"></i>
                                             </div>
                                             <div class="device-info">
-                                                <div class="device-name">Apple iPad</div>
-                                                <div class="device-brand">Apple Inc. — Company Asset</div>
+                                                <div class="device-name">Realme Pad 2 Lite</div>
+                                                <div class="device-brand">Realme — Company Asset</div>
                                             </div>
                                             <div class="device-tag tag-issued">PROCESSED</div>
                                         </div>
@@ -368,7 +377,7 @@
                                             </div>
                                             <div class="data-box">
                                                 <label>Issue Date</label>
-                                                <div class="value">May 19, 2026</div>
+                                                <div class="value">May 20, 2026</div>
                                             </div>
                                             <div class="data-box">
                                                 <label>Asset Status</label>
@@ -387,17 +396,17 @@
                                                 </div>
                                                 <div class="term-item">
                                                     <i data-lucide="check-circle"></i>
-                                                    <span>The new Apple iPad is company property and must be used solely
+                                                    <span>The new Realme Pad 2 Lite is company property and must be used solely
                                                         for official purposes.</span>
                                                 </div>
                                                 <div class="term-item">
                                                     <i data-lucide="check-circle"></i>
-                                                    <span>The employee acknowledges receipt of the new iPad and
+                                                    <span>The employee acknowledges receipt of the new Realme Pad 2 Lite and
                                                         surrender of the Tab A8.</span>
                                                 </div>
                                                 <div class="term-item">
                                                     <i data-lucide="check-circle"></i>
-                                                    <span>Any damage or loss of the issued iPad will be subject to
+                                                    <span>Any damage or loss of the issued Realme Pad 2 Lite will be subject to
                                                         company policy on asset recovery.</span>
                                                 </div>
                                             </div>
@@ -508,6 +517,118 @@
             </main>
 
         </section><!-- /dashboard-section -->
+
+        <!-- ═══════════════════════════════════════════
+             ATTENDANCE MODAL
+        ════════════════════════════════════════════ -->
+        <div id="attendance-modal" class="att-overlay" aria-hidden="true">
+            <div class="att-modal glass-card">
+
+                <!-- Modal Header -->
+                <div class="att-header">
+                    <div class="att-title-row">
+                        <div class="att-title">
+                            <i data-lucide="scan-line"></i>
+                            <span>Mark Attendance</span>
+                        </div>
+                        <button class="att-close-btn" id="att-close-btn" title="Close">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                    <p class="att-subtitle">Scan your QR code to mark attendance</p>
+                </div>
+
+                <!-- ── QR Scanner Panel ── -->
+                <div id="att-qr-panel">
+                    <!-- Attempt Counter -->
+                    <div class="att-attempts-bar">
+                        <span class="att-attempts-label">Attempts remaining:</span>
+                        <div class="att-attempts-dots" id="att-dots"></div>
+                        <span class="att-attempts-num" id="att-attempts-num">10</span>
+                    </div>
+
+                    <!-- Camera Viewfinder -->
+                    <div class="att-camera-wrap">
+                        <video id="att-video" autoplay playsinline muted></video>
+                        <canvas id="att-canvas" style="display:none;"></canvas>
+                        <div class="att-scanner-overlay">
+                            <div class="att-scanner-frame">
+                                <span class="corner tl"></span>
+                                <span class="corner tr"></span>
+                                <span class="corner bl"></span>
+                                <span class="corner br"></span>
+                                <div class="att-scan-line"></div>
+                            </div>
+                        </div>
+                        <div class="att-camera-status" id="att-camera-status">
+                            <i data-lucide="camera"></i>
+                            <span>Starting camera…</span>
+                        </div>
+                    </div>
+
+                    <!-- Status Message -->
+                    <div class="att-status-msg" id="att-status-msg"></div>
+
+                    <!-- Try Again / Manual -->
+                    <div class="att-actions">
+                        <button class="btn-outline att-retry-btn" id="att-retry-btn" style="display:none;">
+                            <i data-lucide="refresh-cw"></i> Try Again
+                        </button>
+                        <button class="btn-outline att-manual-link" id="att-manual-link">
+                            <i data-lucide="keyboard"></i> Enter manually instead
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── Success Panel ── -->
+                <div id="att-success-panel" style="display:none;">
+                    <div class="att-success-anim">
+                        <div class="att-success-ring">
+                            <i data-lucide="check"></i>
+                        </div>
+                        <div class="att-success-title">Attendance Marked!</div>
+                        <div class="att-success-sub">Welcome, <strong>Harsh Pratap Singh</strong></div>
+                        <div class="att-success-time" id="att-success-time"></div>
+                    </div>
+                    <button class="btn-primary btn-sm" id="att-done-btn" style="margin-top:1.5rem;">
+                        <i data-lucide="check-circle"></i> Done
+                    </button>
+                </div>
+
+                <!-- ── Manual Fallback Panel ── -->
+                <div id="att-manual-panel" style="display:none;">
+                    <div class="att-manual-notice" id="att-manual-notice">
+                        <i data-lucide="alert-triangle"></i>
+                        <span id="att-manual-notice-text">QR scan failed after 10 attempts. Please enter your credentials to mark attendance.</span>
+                    </div>
+                    <form id="att-manual-form" class="att-manual-form">
+                        <div class="input-group">
+                            <label for="att-email">Work Email</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="mail"></i>
+                                <input type="email" id="att-email" placeholder="name@pw.live" required autocomplete="email">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="att-password">Password</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="lock"></i>
+                                <input type="password" id="att-password" placeholder="••••••••" required>
+                            </div>
+                        </div>
+                        <p class="error-msg" id="att-manual-error"></p>
+                        <button type="submit" class="btn-primary">
+                            <i data-lucide="log-in"></i>
+                            <span>Mark Attendance</span>
+                        </button>
+                    </form>
+                    <button class="att-back-btn" id="att-back-btn">
+                        <i data-lucide="arrow-left"></i> Back to QR scan
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

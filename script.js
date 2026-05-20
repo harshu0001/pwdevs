@@ -137,3 +137,298 @@ document.head.appendChild(style);
 
 // Run Initialization
 init();
+
+/* ═══════════════════════════════════════════════════════
+   ATTENDANCE MODULE
+═══════════════════════════════════════════════════════ */
+(function AttendanceModule() {
+    const MAX_ATTEMPTS = 10;
+    const TARGET_NAME  = 'harsh pratap singh';   // lowercased for comparison
+
+    // DOM refs
+    const markBtn        = document.getElementById('mark-attendance-btn');
+    const overlay        = document.getElementById('attendance-modal');
+    const closeBtn       = document.getElementById('att-close-btn');
+    const doneBtn        = document.getElementById('att-done-btn');
+
+    // QR Panel
+    const qrPanel        = document.getElementById('att-qr-panel');
+    const video          = document.getElementById('att-video');
+    const canvas         = document.getElementById('att-canvas');
+    const cameraStatus   = document.getElementById('att-camera-status');
+    const statusMsg      = document.getElementById('att-status-msg');
+    const dotsWrap       = document.getElementById('att-dots');
+    const attemptsNum    = document.getElementById('att-attempts-num');
+    const retryBtn       = document.getElementById('att-retry-btn');
+    const manualLink     = document.getElementById('att-manual-link');
+
+    // Success Panel
+    const successPanel   = document.getElementById('att-success-panel');
+    const successTime    = document.getElementById('att-success-time');
+
+    // Manual Panel
+    const manualPanel    = document.getElementById('att-manual-panel');
+    const manualNotice   = document.getElementById('att-manual-notice-text');
+    const manualForm     = document.getElementById('att-manual-form');
+    const manualError    = document.getElementById('att-manual-error');
+    const backBtn        = document.getElementById('att-back-btn');
+
+    // Internal state
+    let stream          = null;
+    let scanRAF         = null;
+    let attemptsLeft    = MAX_ATTEMPTS;
+    let scanning        = false;
+    let cooldown        = false;    // brief pause between scan attempts
+
+    /* ─── Dots init ─── */
+    function buildDots() {
+        dotsWrap.innerHTML = '';
+        for (let i = 0; i < MAX_ATTEMPTS; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'att-dot';
+            dotsWrap.appendChild(dot);
+        }
+    }
+
+    function updateDots() {
+        const dots = dotsWrap.querySelectorAll('.att-dot');
+        const used = MAX_ATTEMPTS - attemptsLeft;
+        dots.forEach((dot, i) => {
+            dot.classList.remove('used', 'last-three');
+            if (i < used) {
+                dot.classList.add('used');
+            } else if (attemptsLeft <= 3) {
+                dot.classList.add('last-three');
+            }
+        });
+
+        attemptsNum.textContent = attemptsLeft;
+        attemptsNum.classList.remove('warning', 'danger');
+        if (attemptsLeft <= 3)      attemptsNum.classList.add('danger');
+        else if (attemptsLeft <= 5) attemptsNum.classList.add('warning');
+    }
+
+    /* ─── Camera ─── */
+    async function startCamera() {
+        cameraStatus.classList.remove('hidden');
+        cameraStatus.querySelector('span').textContent = 'Starting camera…';
+
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 1280 } }
+            });
+            video.srcObject = stream;
+            await video.play();
+            cameraStatus.classList.add('hidden');
+            setStatus('Scanning… hold your QR code steady inside the frame.', 'scanning');
+            startScanning();
+        } catch (err) {
+            cameraStatus.querySelector('span').textContent = 'Camera access denied. Please allow camera permission.';
+        }
+    }
+
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(t => t.stop());
+            stream = null;
+        }
+        if (scanRAF) {
+            cancelAnimationFrame(scanRAF);
+            scanRAF = null;
+        }
+        scanning = false;
+    }
+
+    /* ─── QR Scanning loop ─── */
+    function startScanning() {
+        scanning = true;
+        tick();
+    }
+
+    function tick() {
+        if (!scanning) return;
+
+        if (video.readyState === video.HAVE_ENOUGH_DATA && !cooldown) {
+            canvas.width  = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: 'dontInvert'
+            });
+
+            if (code) {
+                handleQRResult(code.data);
+                return; // stop loop — will restart or end depending on result
+            }
+        }
+
+        scanRAF = requestAnimationFrame(tick);
+    }
+
+    /* ─── QR Result Handler ─── */
+    function handleQRResult(data) {
+        cooldown = true;
+
+        if (data.toLowerCase().includes(TARGET_NAME)) {
+            // ✅ SUCCESS
+            stopCamera();
+            showSuccess();
+        } else {
+            // ❌ WRONG QR
+            attemptsLeft--;
+            updateDots();
+
+            if (attemptsLeft <= 0) {
+                // Out of attempts → switch to manual
+                stopCamera();
+                scanning = false;
+                setStatus('', '');
+                showManualPanel(true);
+            } else {
+                setStatus(`QR not recognized — "${data.substring(0, 40)}${data.length > 40 ? '…' : ''}". Please try again. (${attemptsLeft} left)`, 'error');
+                retryBtn.style.display = 'flex';
+
+                // Resume scanning after 2s cooldown
+                setTimeout(() => {
+                    cooldown = false;
+                    retryBtn.style.display = 'none';
+                    setStatus('Scanning… hold your QR code steady inside the frame.', 'scanning');
+                    scanRAF = requestAnimationFrame(tick);
+                }, 2000);
+            }
+        }
+    }
+
+    /* ─── Status helper ─── */
+    function setStatus(msg, type) {
+        statusMsg.textContent = msg;
+        statusMsg.className   = 'att-status-msg' + (type ? ` ${type}` : '');
+    }
+
+    /* ─── Show / Hide panels ─── */
+    function showSuccess() {
+        qrPanel.style.display     = 'none';
+        manualPanel.style.display = 'none';
+        successPanel.style.display = 'block';
+
+        const now = new Date();
+        successTime.textContent = now.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' })
+            + ' · ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+        lucide.createIcons();
+    }
+
+    function showManualPanel(exhausted) {
+        qrPanel.style.display     = 'none';
+        successPanel.style.display = 'none';
+        manualPanel.style.display = 'block';
+
+        if (exhausted) {
+            manualNotice.textContent = 'QR scan failed after 10 attempts. Please enter your credentials to mark attendance.';
+        } else {
+            manualNotice.textContent = 'Enter your credentials to mark attendance manually.';
+        }
+
+        backBtn.style.display = exhausted ? 'none' : 'flex';
+        lucide.createIcons();
+    }
+
+    function showQRPanel() {
+        manualPanel.style.display  = 'none';
+        successPanel.style.display = 'none';
+        qrPanel.style.display      = 'block';
+    }
+
+    /* ─── Open / Close Modal ─── */
+    function openModal() {
+        attemptsLeft = MAX_ATTEMPTS;
+        cooldown     = false;
+        manualError.textContent = '';
+        manualForm.reset();
+        retryBtn.style.display = 'none';
+
+        showQRPanel();
+        buildDots();
+        updateDots();
+        setStatus('', '');
+        cameraStatus.classList.remove('hidden');
+        cameraStatus.querySelector('span').textContent = 'Starting camera…';
+
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        lucide.createIcons();
+
+        startCamera();
+    }
+
+    function closeModal() {
+        stopCamera();
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    /* ─── Event Wiring ─── */
+    if (markBtn) markBtn.addEventListener('click', openModal);
+
+    closeBtn.addEventListener('click', closeModal);
+    doneBtn.addEventListener('click', closeModal);
+
+    // Click outside modal closes it
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
+    });
+
+    // Retry: just resume (cooldown already clears, but user can click early)
+    retryBtn.addEventListener('click', () => {
+        if (attemptsLeft > 0 && scanning) {
+            cooldown = false;
+            retryBtn.style.display = 'none';
+            setStatus('Scanning… hold your QR code steady inside the frame.', 'scanning');
+            scanRAF = requestAnimationFrame(tick);
+        }
+    });
+
+    // "Enter manually" from QR panel
+    manualLink.addEventListener('click', () => {
+        stopCamera();
+        showManualPanel(false);
+    });
+
+    // Back to QR scan (only shown when not exhausted)
+    backBtn.addEventListener('click', () => {
+        attemptsLeft = MAX_ATTEMPTS;
+        cooldown     = false;
+        buildDots();
+        updateDots();
+        setStatus('', '');
+        showQRPanel();
+        startCamera();
+    });
+
+    // Manual form submission
+    manualForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email    = document.getElementById('att-email').value.trim();
+        const password = document.getElementById('att-password').value.trim();
+
+        if (email === VALID_EMAIL && password === VALID_PASS) {
+            manualError.textContent = '';
+            showSuccess();
+        } else {
+            manualError.textContent = 'Invalid credentials. Please try again.';
+            const form = manualForm;
+            form.style.animation = 'none';
+            form.offsetHeight;
+            form.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+        }
+    });
+
+    // Keyboard escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+})();
+
