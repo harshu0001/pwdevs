@@ -1572,14 +1572,154 @@ section.active {
 }
 
 @media print {
-    .classic-payslip {
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-        max-width: 100%;
+    body {
+        background: white !important;
+        color: black !important;
     }
+    
+    /* Hide non-printable elements */
+    .navbar, 
+    .page-hero, 
+    .section-header, 
+    .certificate-header, 
+    .payslip-auth-container, 
+    .background-blobs, 
+    #login-section {
+        display: none !important;
+    }
+    
+    /* Hide inactive pages */
+    .page-content:not(.active) {
+        display: none !important;
+    }
+    
+    /* Reset containers to avoid padding/margins/backgrounds taking space */
+    .dashboard-content,
+    .certificate-container,
+    .glass-card,
+    .certificate-view {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    /* Make sure the receipt takes full width */
+    .official-receipt {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .classic-payslip {
+        min-width: 800px !important;
+    }
+    
     .cp-header {
         background-color: transparent !important;
         -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
+    
+    .cp-details {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    
+    .cp-col {
+        width: 48% !important;
+    }
+
+    .cp-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+    }
+}
+
+/* Database Page */
+.db-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.db-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.db-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.db-card:hover::before {
+    opacity: 1;
+}
+
+.db-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 0 15px rgba(239, 68, 68, 0.1);
+}
+
+.db-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.db-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.db-card:hover .db-icon {
+    color: var(--error);
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.db-name {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    text-transform: capitalize;
+}
+
+.db-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }

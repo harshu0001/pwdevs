@@ -478,7 +478,39 @@
                         <span class="badge-success">Processed</span>
                     </div>
 
-                    <div class="certificate-container">
+                    <!-- Payslip Auth Section -->
+                    <div class="payslip-auth-container" id="payslip-auth-container">
+                        <div class="glass-card login-card" style="margin: 2rem auto; max-width: 400px; padding: 2rem;">
+                            <div class="logo-area">
+                                <i data-lucide="lock" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main); font-family: var(--font-heading);">Access Payslip</h2>
+                                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Please enter your credentials to view your payslip</p>
+                            </div>
+                            <form id="payslip-auth-form">
+                                <div class="input-group">
+                                    <label for="payslip-pw-id">PW ID</label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="user"></i>
+                                        <input type="text" id="payslip-pw-id" placeholder="Lx240104" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="payslip-password">Password</label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="lock"></i>
+                                        <input type="password" id="payslip-password" placeholder="••••••••" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary" id="payslip-login-btn">
+                                    <i data-lucide="unlock"></i>
+                                    <span>View Payslip</span>
+                                </button>
+                                <p id="payslip-error-message" class="error-msg"></p>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="certificate-container" id="payslip-content-container" style="display: none;">
                         <div class="glass-card certificate-card">
                             <div class="certificate-header">
                                 <div class="cert-status">
@@ -610,26 +642,122 @@
 
             <!-- ─── Page: Databases ─── -->
             <main class="page-content" id="page-databases">
-                <div class="coming-soon-wrap">
-                    <div class="cs-icon"><i data-lucide="database"></i></div>
-                    <h2 class="cs-title">Databases</h2>
-                    <p class="cs-sub">This section is under construction.</p>
-                    <div class="cs-badge">Coming Soon</div>
-                    <div class="cs-dots">
-                        <span></span><span></span><span></span>
+                <div class="dashboard-content">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <i data-lucide="database"></i>
+                            <span>Databases</span>
+                        </div>
+                        <span class="badge-tradein">Restricted Access</span>
+                    </div>
+                    
+                    <div class="db-grid">
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">tests</h3>
+                            <p class="db-desc">Assessment &amp; Quizzes</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">pi</h3>
+                            <p class="db-desc">Personal Information</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">platform</h3>
+                            <p class="db-desc">Core Infrastructure</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">users</h3>
+                            <p class="db-desc">Global User Directory</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">students</h3>
+                            <p class="db-desc">Enrolled Students Data</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">creators</h3>
+                            <p class="db-desc">Content Creators Info</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">offline</h3>
+                            <p class="db-desc">Offline Centers Sync</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">downloads</h3>
+                            <p class="db-desc">App Downloads &amp; Metrics</p>
+                        </div>
+                        <div class="db-card glass-card">
+                            <div class="db-icon"><i data-lucide="server"></i></div>
+                            <h3 class="db-name">materials</h3>
+                            <p class="db-desc">Study Material Assets</p>
+                        </div>
                     </div>
                 </div>
             </main>
 
             <!-- ─── Page: JSON Files ─── -->
             <main class="page-content" id="page-json">
-                <div class="coming-soon-wrap">
-                    <div class="cs-icon"><i data-lucide="file-json"></i></div>
-                    <h2 class="cs-title">JSON Files</h2>
-                    <p class="cs-sub">JSON configuration browser coming soon.</p>
-                    <div class="cs-badge">Coming Soon</div>
-                    <div class="cs-dots">
-                        <span></span><span></span><span></span>
+                <div class="dashboard-content">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <i data-lucide="file-json"></i>
+                            <span>JSON Configurations</span>
+                        </div>
+                        <span class="badge-tradein">Restricted Access</span>
+                    </div>
+                    
+                    <div class="db-grid" id="json-grid">
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">tests</h3>
+                            <p class="db-desc">tests.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">pi</h3>
+                            <p class="db-desc">pi.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card" id="json-platform">
+                            <div class="db-icon"><i data-lucide="download"></i></div>
+                            <h3 class="db-name">platform</h3>
+                            <p class="db-desc">platform_students.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">users</h3>
+                            <p class="db-desc">users.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">students</h3>
+                            <p class="db-desc">students.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">creators</h3>
+                            <p class="db-desc">creators.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">offline</h3>
+                            <p class="db-desc">offline.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">downloads</h3>
+                            <p class="db-desc">downloads.json</p>
+                        </div>
+                        <div class="db-card glass-card json-card">
+                            <div class="db-icon"><i data-lucide="code"></i></div>
+                            <h3 class="db-name">materials</h3>
+                            <p class="db-desc">materials.json</p>
+                        </div>
                     </div>
                 </div>
             </main>

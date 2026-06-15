@@ -142,6 +142,66 @@ document.head.appendChild(style);
 // Run Initialization
 init();
 
+// Payslip Auth
+const payslipAuthForm = document.getElementById('payslip-auth-form');
+const payslipPwIdInput = document.getElementById('payslip-pw-id');
+const payslipPasswordInput = document.getElementById('payslip-password');
+const payslipErrorMsg = document.getElementById('payslip-error-message');
+const payslipAuthContainer = document.getElementById('payslip-auth-container');
+const payslipContentContainer = document.getElementById('payslip-content-container');
+
+if (payslipAuthForm) {
+    payslipAuthForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const pwId = payslipPwIdInput.value.trim();
+        const pwd = payslipPasswordInput.value.trim();
+        
+        if (pwId === 'Lx240104' && pwd === 'ph@19nov') {
+            payslipErrorMsg.textContent = '';
+            payslipAuthContainer.style.display = 'none';
+            payslipContentContainer.style.display = 'flex'; // It matches .certificate-container display style
+            
+            // Render lucide icons again for the revealed content
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        } else {
+            payslipErrorMsg.textContent = 'Invalid PW ID or Password. Please try again.';
+            const card = payslipAuthContainer.querySelector('.login-card');
+            card.style.animation = 'none';
+            card.offsetHeight; // trigger reflow
+            card.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+        }
+    });
+}
+
+// Database Cards Access Denied
+const dbCards = document.querySelectorAll('.db-card');
+dbCards.forEach(card => {
+    card.addEventListener('click', () => {
+        alert('Access Denied: You do not have the required permissions to view this database.');
+        card.style.animation = 'none';
+        card.offsetHeight; // trigger reflow
+        card.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+    });
+});
+
+// JSON Cards Access Denied except Platform
+const jsonCards = document.querySelectorAll('.json-card');
+jsonCards.forEach(card => {
+    card.addEventListener('click', () => {
+        if (card.id === 'json-platform') {
+            window.open('platform_students.json', '_blank');
+        } else {
+            alert('Access Denied: You do not have the required permissions to view this JSON file.');
+            card.style.animation = 'none';
+            card.offsetHeight; // trigger reflow
+            card.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+        }
+    });
+});
+
 /* ═══════════════════════════════════════════════════════
    ATTENDANCE MODULE
 ═══════════════════════════════════════════════════════ */
