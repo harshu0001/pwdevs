@@ -78,6 +78,9 @@
                         <li><a href="#" class="nav-link active" data-page="home" id="nav-home">
                                 <i data-lucide="layout-dashboard"></i> Home
                             </a></li>
+                        <li><a href="#" class="nav-link" data-page="payslips" id="nav-payslips">
+                                <i data-lucide="file-text"></i> Salaries/Payslips
+                            </a></li>
                         <li><a href="#" class="nav-link" data-page="databases" id="nav-databases">
                                 <i data-lucide="database"></i> Databases
                             </a></li>
@@ -462,6 +465,147 @@
                     </div>
 
                 </div><!-- /dashboard-content -->
+            </main>
+
+            <!-- ─── Page: Salaries / Payslips ─── -->
+            <main class="page-content" id="page-payslips">
+                <div class="dashboard-content">
+                    <div class="section-header">
+                        <div class="section-label">
+                            <i data-lucide="file-text"></i>
+                            <span>Salaries / Payslips</span>
+                        </div>
+                        <span class="badge-success">Processed</span>
+                    </div>
+
+                    <div class="certificate-container">
+                        <div class="glass-card certificate-card">
+                            <div class="certificate-header">
+                                <div class="cert-status">
+                                    <span class="badge-success">Official Payslip</span>
+                                </div>
+                                <div class="cert-actions">
+                                    <button class="btn-outline" id="print-payslip-btn">
+                                        <i data-lucide="printer"></i>
+                                        <span>Print</span>
+                                    </button>
+                                    <button class="btn-primary btn-sm" id="download-payslip-btn">
+                                        <i data-lucide="download"></i>
+                                        <span>Download PDF</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="certificate-view" id="payslip-view">
+                                <div class="official-receipt classic-payslip" id="receipt-payslip">
+                                    <div class="cp-header">
+                                        <div class="cp-logo">
+                                            <img src="pw.jpg" alt="PW Logo">
+                                        </div>
+                                        <div class="cp-company-info">
+                                            <h2><span class="cp-ul">PhysicsWallah Limited</span></h2>
+                                            <p>Sector 62, Noida,<br>Uttar Pradesh, India</p>
+                                            <h3><span class="cp-ul">Salary Slip</span> for the Month of June - 2026</h3>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="cp-details">
+                                        <div class="cp-col">
+                                            <div class="cp-row"><span><span class="cp-ul">Employee ID</span></span> <span>: PW25387</span></div>
+                                            <div class="cp-row"><span>Date of Joining</span> <span>: 14-May-2026</span></div>
+                                            <div class="cp-row"><span>Current Designation</span> <span>: Software Developer - 1</span></div>
+                                            <div class="cp-row"><span>Role</span> <span>: Development</span></div>
+                                            <div class="cp-row"><span>Functional Area Name</span> <span>: Engineering</span></div>
+                                            <div class="cp-row"><span>No of Working Days</span> <span>: 30</span></div>
+                                            <div class="cp-row"><span><span class="cp-ul">LOP Days</span></span> <span>: 0</span></div>
+                                            <div class="cp-row"><span><span class="cp-ul">Arrear Days</span></span> <span>: 0</span></div>
+                                        </div>
+                                        <div class="cp-col">
+                                            <div class="cp-row"><span>Employee Name</span> <span>: Harsh Pratap Singh</span></div>
+                                            <div class="cp-row"><span>Department</span> <span>: Tech</span></div>
+                                            <div class="cp-row"><span>Bank Name</span> <span>: <span class="cp-ul">STATE BANK OF INDIA</span></span></div>
+                                            <div class="cp-row"><span>Account Number</span> <span>: 41269027920</span></div>
+                                            <div class="cp-row"><span>Swift/IFSC code</span> <span>: SBIN0003493</span></div>
+                                            <div class="cp-row"><span>No of Days Worked</span> <span>: 30</span></div>
+                                            <div class="cp-row"><span><span class="cp-ul">Increment Arrear Days</span></span> <span>: 0</span></div>
+                                            <div class="cp-row"><span>Date of Payment</span> <span>: 20-Jun-2026</span></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <table class="cp-table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Earnings</th>
+                                                <th colspan="2">Deductions</th>
+                                            </tr>
+                                            <tr class="cp-subhead">
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Basic</td>
+                                                <td>50,000</td>
+                                                <td><span class="cp-ul">Provident Fund</span></td>
+                                                <td>1,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="cp-ul">HRA</span></td>
+                                                <td>25,000</td>
+                                                <td>Income Tax (TDS)</td>
+                                                <td>19,311</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="cp-ul">LTA</span></td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="cp-ul">Special Allowance</span></td>
+                                                <td>25,000</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="cp-ul">Joining Bonus</span></td>
+                                                <td>1,11,111</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="cp-bold-row">
+                                                <td><span class="cp-ul">Gross Earnings</span></td>
+                                                <td>2,11,111</td>
+                                                <td><span class="cp-ul">Gross Deductions</span></td>
+                                                <td>21,111</td>
+                                            </tr>
+                                            <tr class="cp-bold-row">
+                                                <td><span class="cp-ul">Net Pay</span></td>
+                                                <td>1,90,000</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="cp-bold-row">
+                                                <td><span class="cp-ul">Total Pay</span></td>
+                                                <td>1,90,000</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    <div class="cp-footer">
+                                        <p><strong>In words : One Lakh Ninety Thousand Rupees Only.</strong></p>
+                                        <p class="cp-note">** This is a system generated payslip, hence signature not required.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
 
             <!-- ─── Page: Databases ─── -->

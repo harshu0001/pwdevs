@@ -1442,3 +1442,144 @@ section.active {
         max-width: 100%;
     }
 }
+
+/* Classic Payslip Styling */
+.classic-payslip {
+    background: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.cp-header {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fc;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cp-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.cp-company-info {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.cp-company-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+}
+
+.cp-company-info p {
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.cp-company-info h3 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+}
+
+.cp-ul {
+    text-decoration: underline;
+    text-decoration-color: #d0bcf0;
+    text-decoration-thickness: 2px;
+}
+
+.cp-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+}
+
+.cp-col {
+    width: 48%;
+}
+
+.cp-row {
+    display: flex;
+    margin-bottom: 0.8rem;
+}
+
+.cp-row span:first-child {
+    width: 160px;
+    color: #444;
+}
+
+.cp-row span:last-child {
+    flex-grow: 1;
+    color: #000;
+    font-weight: 600;
+}
+
+.cp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+}
+
+.cp-table th, .cp-table td {
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.cp-table th {
+    text-align: center;
+    font-size: 1rem;
+    color: #000;
+}
+
+.cp-table .cp-subhead th {
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.cp-table td:nth-child(even) {
+    text-align: right;
+}
+
+.cp-bold-row td {
+    font-weight: bold;
+}
+
+.cp-footer {
+    font-size: 0.85rem;
+    color: #333;
+    margin-top: 2rem;
+}
+
+.cp-footer strong {
+    color: #000;
+}
+
+.cp-note {
+    margin-top: 1rem;
+    color: #666;
+}
+
+@media print {
+    .classic-payslip {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+    }
+    .cp-header {
+        background-color: transparent !important;
+        -webkit-print-color-adjust: exact;
+    }
+}

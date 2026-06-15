@@ -22,6 +22,8 @@ const downloadLaptopBtn = document.getElementById('download-laptop-btn');
 const printLaptopBtn = document.getElementById('print-laptop-btn');
 const downloadTradeinBtn = document.getElementById('download-tradein-btn');
 const printTradeinBtn = document.getElementById('print-tradein-btn');
+const downloadPayslipBtn = document.getElementById('download-payslip-btn');
+const printPayslipBtn = document.getElementById('print-payslip-btn');
 
 // Credentials
 const VALID_EMAIL = 'harsh.240104@pw.live';
@@ -122,6 +124,8 @@ if (printLaptopBtn) printLaptopBtn.addEventListener('click', handlePrint);
 if (downloadLaptopBtn) downloadLaptopBtn.addEventListener('click', handlePrint);
 if (printTradeinBtn) printTradeinBtn.addEventListener('click', handlePrint);
 if (downloadTradeinBtn) downloadTradeinBtn.addEventListener('click', handlePrint);
+if (printPayslipBtn) printPayslipBtn.addEventListener('click', handlePrint);
+if (downloadPayslipBtn) downloadPayslipBtn.addEventListener('click', handlePrint);
 
 // Add CSS animation for shake
 const style = document.createElement('style');
