@@ -28,6 +28,8 @@ const printPayslipBtn = document.getElementById('print-payslip-btn');
 // Credentials
 const VALID_EMAIL = 'harsh.240104@pw.live';
 const VALID_PASS = 'ph@19nov';
+const ANU_EMAIL = 'anu.singh@pw.live';
+const ANU_PASS = 'anupratap586';
 
 // Initialization
 function init() {
@@ -54,7 +56,7 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     
-    if (email === VALID_EMAIL && password === VALID_PASS) {
+    if ((email === VALID_EMAIL && password === VALID_PASS) || (email === ANU_EMAIL && password === ANU_PASS)) {
         errorMessage.textContent = '';
         localStorage.setItem('pw_user_email', email);
         showDashboard(email);
@@ -76,6 +78,8 @@ logoutBtn.addEventListener('click', (e) => {
 
 function logout() {
     localStorage.removeItem('pw_user_email');
+    state.userEmail = '';
+    document.body.classList.remove('theme-anu');
     dashboardSection.classList.remove('active');
     loginSection.classList.add('active');
     loginForm.reset();
@@ -83,9 +87,16 @@ function logout() {
 
 // UI Transition
 function showDashboard(email) {
+    state.userEmail = email;
     userDisplay.textContent = email;
     loginSection.classList.remove('active');
     dashboardSection.classList.add('active');
+    
+    if (email === ANU_EMAIL) {
+        document.body.classList.add('theme-anu');
+    } else {
+        document.body.classList.remove('theme-anu');
+    }
     
     // Always default to home page on login
     switchPage('home');
@@ -104,9 +115,12 @@ function switchPage(pageId) {
         }
     });
 
+    const isAnu = state.userEmail === ANU_EMAIL;
+
     // Update visible pages
     pages.forEach(page => {
-        if (page.id === `page-${pageId}`) {
+        const targetId = isAnu ? `page-${pageId}-anu` : `page-${pageId}`;
+        if (page.id === targetId) {
             page.classList.add('active');
         } else {
             page.classList.remove('active');

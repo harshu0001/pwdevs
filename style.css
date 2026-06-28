@@ -1723,3 +1723,14 @@ section.active {
     font-size: 0.85rem;
     color: var(--text-muted);
 }
+
+/* Anu Theme */
+body.theme-anu {
+    --primary: #FF6B6B;
+    --primary-dark: #cc5555;
+    --bg-dark: #1a1025;
+    --tradein: #4ecdc4;
+}
+body.theme-anu .blob-1 { background: radial-gradient(circle, rgba(255, 107, 107, 0.15) 0%, rgba(255, 107, 107, 0) 70%); }
+body.theme-anu .blob-2 { background: radial-gradient(circle, rgba(78, 205, 196, 0.15) 0%, rgba(78, 205, 196, 0) 70%); }
+body.theme-anu .blob-3 { background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0) 70%); }
